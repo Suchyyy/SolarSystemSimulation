@@ -1,46 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="942c8f36-98d1-4314-a30f-c0a0a8e10900" name="Default Changelist" comment="moved to helix-toolkit.sharpdx">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.SolarSystemSimulation/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.SolarSystemSimulation/.idea/contentModel.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.SolarSystemSimulation/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.SolarSystemSimulation/.idea/indexLayout.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.SolarSystemSimulation/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.SolarSystemSimulation/.idea/projectSettingsUpdater.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.SolarSystemSimulation/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.SolarSystemSimulation/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.SolarSystemSimulation/riderModule.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SolarSystemSimulation.sln" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SolarSystemSimulation/App.config" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SolarSystemSimulation/App.xaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SolarSystemSimulation/App.xaml.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SolarSystemSimulation/MainWindow.xaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SolarSystemSimulation/MainWindow.xaml.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SolarSystemSimulation/Properties/AssemblyInfo.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SolarSystemSimulation/Properties/Resources.Designer.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SolarSystemSimulation/Properties/Resources.resx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SolarSystemSimulation/SolarSystem/AstronomicalObject.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SolarSystemSimulation/SolarSystemSimulation.csproj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SolarSystemSimulation/Texture/TextureHelper.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SolarSystemSimulation/bin/Debug/SolarSystemSimulation.exe" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SolarSystemSimulation/bin/Debug/SolarSystemSimulation.exe.config" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SolarSystemSimulation/bin/Debug/SolarSystemSimulation.pdb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SolarSystemSimulation/obj/Debug/App.g.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SolarSystemSimulation/obj/Debug/App.g.i.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SolarSystemSimulation/obj/Debug/MainWindow.baml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SolarSystemSimulation/obj/Debug/MainWindow.g.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SolarSystemSimulation/obj/Debug/MainWindow.g.i.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SolarSystemSimulation/obj/Debug/SolarSystemSimulation.Properties.Resources.resources" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SolarSystemSimulation/obj/Debug/SolarSystemSimulation.csproj.FileListAbsolute.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SolarSystemSimulation/obj/Debug/SolarSystemSimulation.csproj.GenerateResource.cache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SolarSystemSimulation/obj/Debug/SolarSystemSimulation.csprojAssemblyReference.cache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SolarSystemSimulation/obj/Debug/SolarSystemSimulation.exe" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SolarSystemSimulation/obj/Debug/SolarSystemSimulation.g.resources" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SolarSystemSimulation/obj/Debug/SolarSystemSimulation.pdb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SolarSystemSimulation/obj/Debug/SolarSystemSimulation_MarkupCompile.cache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SolarSystemSimulation/obj/Debug/SolarSystemSimulation_MarkupCompile.lref" afterDir="false" />
+    <list default="true" id="942c8f36-98d1-4314-a30f-c0a0a8e10900" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.SolarSystemSimulation/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SolarSystemSimulation/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -155,8 +117,16 @@
       <workItem from="1582728744233" duration="975000" />
       <workItem from="1582730077259" duration="12000" />
       <workItem from="1582730116166" duration="8705000" />
-      <workItem from="1588932896301" duration="24120000" />
+      <workItem from="1588932896301" duration="24495000" />
     </task>
+    <task id="LOCAL-00001" summary="moved to helix-toolkit.sharpdx">
+      <created>1588957264151</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1588957264151</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -181,6 +151,8 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
+    <MESSAGE value="moved to helix-toolkit.sharpdx" />
+    <option name="LAST_COMMIT_MESSAGE" value="moved to helix-toolkit.sharpdx" />
   </component>
   <component name="WindowStateProjectService">
     <state x="-1386" y="185" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1582732737076">
@@ -195,26 +167,26 @@
       <screen x="-1680" y="26" width="1680" height="1010" />
     </state>
     <state x="-1093" y="396" key="ANALYSIS_DLG_com.jetbrains.rider.actions.impl.cleanup.RiderCodeCleanupAction$actionPerformed$dlg$1/0.0.1920.1040/-1680.26.1680.1010@-1680.26.1680.1010" timestamp="1588945910730" />
-    <state x="-1187" y="114" key="CommitChangelistDialog2" timestamp="1588957242883">
+    <state x="-1187" y="114" key="CommitChangelistDialog2" timestamp="1588957638060">
       <screen x="-1680" y="26" width="1680" height="1010" />
     </state>
-    <state x="-1187" y="114" key="CommitChangelistDialog2/0.0.1920.1040/-1680.26.1680.1010@-1680.26.1680.1010" timestamp="1588957242883" />
-    <state width="1637" height="272" key="GridCell.Tab.0.bottom" timestamp="1588956212496">
+    <state x="-1187" y="114" key="CommitChangelistDialog2/0.0.1920.1040/-1680.26.1680.1010@-1680.26.1680.1010" timestamp="1588957638060" />
+    <state width="1637" height="272" key="GridCell.Tab.0.bottom" timestamp="1588957659448">
       <screen x="-1680" y="26" width="1680" height="1010" />
     </state>
-    <state width="1637" height="272" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1680.26.1680.1010@-1680.26.1680.1010" timestamp="1588956212496" />
-    <state width="1637" height="272" key="GridCell.Tab.0.center" timestamp="1588956212495">
+    <state width="1637" height="272" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1680.26.1680.1010@-1680.26.1680.1010" timestamp="1588957659448" />
+    <state width="1637" height="272" key="GridCell.Tab.0.center" timestamp="1588957659448">
       <screen x="-1680" y="26" width="1680" height="1010" />
     </state>
-    <state width="1637" height="272" key="GridCell.Tab.0.center/0.0.1920.1040/-1680.26.1680.1010@-1680.26.1680.1010" timestamp="1588956212495" />
-    <state width="1637" height="272" key="GridCell.Tab.0.left" timestamp="1588956212495">
+    <state width="1637" height="272" key="GridCell.Tab.0.center/0.0.1920.1040/-1680.26.1680.1010@-1680.26.1680.1010" timestamp="1588957659448" />
+    <state width="1637" height="272" key="GridCell.Tab.0.left" timestamp="1588957659447">
       <screen x="-1680" y="26" width="1680" height="1010" />
     </state>
-    <state width="1637" height="272" key="GridCell.Tab.0.left/0.0.1920.1040/-1680.26.1680.1010@-1680.26.1680.1010" timestamp="1588956212495" />
-    <state width="1637" height="272" key="GridCell.Tab.0.right" timestamp="1588956212495">
+    <state width="1637" height="272" key="GridCell.Tab.0.left/0.0.1920.1040/-1680.26.1680.1010@-1680.26.1680.1010" timestamp="1588957659447" />
+    <state width="1637" height="272" key="GridCell.Tab.0.right" timestamp="1588957659448">
       <screen x="-1680" y="26" width="1680" height="1010" />
     </state>
-    <state width="1637" height="272" key="GridCell.Tab.0.right/0.0.1920.1040/-1680.26.1680.1010@-1680.26.1680.1010" timestamp="1588956212495" />
+    <state width="1637" height="272" key="GridCell.Tab.0.right/0.0.1920.1040/-1680.26.1680.1010@-1680.26.1680.1010" timestamp="1588957659448" />
     <state width="1637" height="336" key="GridCell.Tab.1.bottom" timestamp="1588953159952">
       <screen x="-1680" y="26" width="1680" height="1010" />
     </state>
@@ -287,6 +259,14 @@
       <screen x="-1680" y="26" width="1680" height="1010" />
     </state>
     <state x="-1339" y="174" key="SettingsEditor/0.0.1920.1040/-1680.26.1680.1010@-1680.26.1680.1010" timestamp="1582732590029" />
+    <state x="-1160" y="207" key="Vcs.Push.Dialog.v2" timestamp="1588957678465">
+      <screen x="-1680" y="26" width="1680" height="1010" />
+    </state>
+    <state x="-1160" y="207" key="Vcs.Push.Dialog.v2/0.0.1920.1040/-1680.26.1680.1010@-1680.26.1680.1010" timestamp="1588957678465" />
+    <state x="-1147" y="322" key="git4idea.merge.GitPullDialog" timestamp="1588957668997">
+      <screen x="-1680" y="26" width="1680" height="1010" />
+    </state>
+    <state x="-1147" y="322" key="git4idea.merge.GitPullDialog/0.0.1920.1040/-1680.26.1680.1010@-1680.26.1680.1010" timestamp="1588957668997" />
     <state x="-1177" y="243" width="672" height="678" key="search.everywhere.popup" timestamp="1588940104559">
       <screen x="-1680" y="26" width="1680" height="1010" />
     </state>
