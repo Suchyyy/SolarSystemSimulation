@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\Norbert\.Rider2019.3\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\Norbert\.Rider2019.3\system\resharper-host\local\Transient\ReSharperHost\v193\SolutionCaches\_SolarSystemSimulation.608956327.00" t="ExcludeRecursive" />
+    <e p="C:\Users\Norbert\Documents\Rider\SolarSystemSimulation" t="IncludeFlat">
+      <e p=".gitignore" t="Include" />
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="SolarSystemSimulation" t="IncludeRecursive">
+        <e p="App.config" t="Include" />
+        <e p="App.xaml" t="Include" />
+        <e p="App.xaml.cs" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="MainWindow.xaml" t="Include" />
+        <e p="MainWindow.xaml.cs" t="Include" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="App.g.cs" t="Include" />
+            <e p="MainWindow.g.cs" t="Include" />
+          </e>
+        </e>
+        <e p="Properties" t="Include">
+          <e p="AssemblyInfo.cs" t="Include" />
+          <e p="Resources.Designer.cs" t="Include" />
+          <e p="Resources.resx" t="Include" />
+        </e>
+        <e p="Resources" t="Include">
+          <e p="earth.png" t="Include" />
+          <e p="skymap.jpg" t="Include" />
+          <e p="sun.jpg" t="Include" />
+        </e>
+        <e p="SolarSystem" t="Include">
+          <e p="AstronomicalObject.cs" t="Include" />
+        </e>
+        <e p="SolarSystemSimulation.csproj" t="IncludeRecursive" />
+        <e p="Texture" t="Include">
+          <e p="TextureHelper.cs" t="Include" />
+        </e>
+      </e>
+      <e p="SolarSystemSimulation.sln" t="IncludeFlat" />
+    </e>
+  </component>
+</project>
