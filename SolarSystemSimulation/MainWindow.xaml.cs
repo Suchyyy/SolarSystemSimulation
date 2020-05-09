@@ -1,16 +1,16 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.IO;
+using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using HelixToolkit.Wpf.SharpDX;
 using HelixToolkit.Wpf.SharpDX.Utilities;
+using SharpDX;
+using DiffuseMaterial = HelixToolkit.Wpf.SharpDX.DiffuseMaterial;
 using OrthographicCamera = HelixToolkit.Wpf.SharpDX.OrthographicCamera;
 
 namespace SolarSystemSimulation
 {
-    /// <summary>
-    ///     Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow
     {
         static NVOptimusEnabler nvEnabler = new NVOptimusEnabler();
@@ -18,19 +18,38 @@ namespace SolarSystemSimulation
         public EffectsManager EffectsManager { get; }
         public OrthographicCamera Camera { get; }
 
-        public Color LightColor { get; }
+        public Color4 LightColor { get; }
+
+        public Stream EnvironmentMap { get; set; }
 
         private SolarSystem.SolarSystem _system;
+
+        public static MemoryStream LoadFileToMemory(string filepath)
+        {
+            using (var fs = new FileStream(filepath, FileMode.Open))
+            {
+                var ms = new MemoryStream();
+                fs.CopyTo(ms);
+                return ms;
+            }
+        }
 
         public MainWindow()
         {
             _system = new SolarSystem.SolarSystem();
+            EnvironmentMap = LoadFileToMemory(@"Resources\skymap.dds");
 
-            LightColor = new Color {ScR = 1, ScG = 1, ScB = 1, ScA = 0.1f};
+            Console.WriteLine(EnvironmentMap.Length);
+
+            LightColor = new Color {R = 255, G = 255, B = 255, A = 155};
             EffectsManager = new DefaultEffectsManager();
             Camera = new OrthographicCamera();
 
-            var device = EffectsManager.Device;
+            var sun = _system.Bodies[0];
+            sun.Material = new DiffuseMaterial
+            {
+                DiffuseMap = LoadFileToMemory(@"Resources\sun.jpg")
+            };
 
             InitializeComponent();
 

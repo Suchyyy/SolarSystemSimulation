@@ -19,10 +19,11 @@
                         MSAA="Maximum"
                         EnableSwapChainRendering="True"
                         EffectsManager="{Binding EffectsManager}"
-                        BackgroundColor="Black"
                         Camera="{Binding Camera}">
             <!-- <hx:DirectionalLight3D Direction="0, -1, 0" Color="White"/> -->
             <hx:AmbientLight3D Color="{Binding LightColor}" />
+            
+            <hx:EnvironmentMap3D Texture="{Binding EnvironmentMap}"></hx:EnvironmentMap3D>
         </hx:Viewport3DX>
     </Grid>
 </Window>
