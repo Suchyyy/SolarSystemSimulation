@@ -53,7 +53,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="SolarSystem\AstronomicalObject.cs" />
-    <Compile Include="Texture\TextureHelper.cs" />
+    <Compile Include="SolarSystem\SolarSystem.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -88,14 +88,9 @@
     <PackageReference Include="HelixToolkit.Wpf.SharpDX" Version="2.11.0" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\skymap.jpg" />
-    <EmbeddedResource Include="Resources\sun.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="..\.gitignore">
       <Link>.gitignore</Link>
     </Content>
-    <Content Include="Resources\earth.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

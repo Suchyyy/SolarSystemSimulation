@@ -13,6 +13,14 @@ namespace SolarSystemSimulation.SolarSystem
         public static readonly double Au = 1.495e11;
         public static readonly double Me = 5.9722e24;
 
+        private readonly TranslateTransform3D _translateTransform3D;
+
+        private Vector3D _gravity;
+        public double Mass { get; set; }
+        public Vector3D Velocity { get; set; }
+        public Point3D Position { get; set; }
+        public bool VisibleOrbits { get; set; } = true;
+
         public AstronomicalObject(double radius)
         {
             var meshBuilder = new MeshBuilder(true, true, true);
@@ -20,35 +28,43 @@ namespace SolarSystemSimulation.SolarSystem
 
             Geometry = meshBuilder.ToMesh();
             CullMode = CullMode.Back;
+
+            _translateTransform3D = new TranslateTransform3D();
+            Transform = _translateTransform3D;
+
+            _gravity = new Vector3D();
         }
 
-        public double Mass { get; set; }
-        public Point3D Position { get; set; }
-
-        public Vector3D Velocity { get; set; }
-
-        public Vector3D GetGravity(IEnumerable<AstronomicalObject> objects)
+        public void CalculateGravity(IEnumerable<AstronomicalObject> objects)
         {
-            var force = new Vector3D();
+            _gravity.X = 0.0;
+            _gravity.Y = 0;
+            _gravity.Z = 0;
 
-            foreach (var astronomicalObject in objects)
+            foreach (var body in objects)
             {
-                if (astronomicalObject.Equals(this)) continue;
+                if (body.Equals(this)) continue;
 
-                var direction = astronomicalObject.Position - Position;
-                var f = G * Mass * astronomicalObject.Mass / Math.Pow(direction.Length, 2);
+                var direction = body.Position - Position;
+                var f = G * body.Mass / Math.Pow(direction.Length, 2);
 
                 direction.Normalize();
 
-                force += direction * f;
+                _gravity += direction * f;
             }
-
-            return force;
         }
 
-        public void UpdatePosition()
+        public void UpdatePosition(double dt)
         {
-            Position += Velocity;
+            Position += Velocity * dt;
+            Velocity += _gravity * dt;
+
+            Dispatcher?.Invoke(() =>
+            {
+                _translateTransform3D.OffsetX = Position.X / Au * 500;
+                _translateTransform3D.OffsetY = Position.Y / Au * 500;
+                _translateTransform3D.OffsetZ = Position.Z / Au * 500;
+            });
         }
     }
 }
