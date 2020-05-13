@@ -21,23 +21,32 @@ namespace SolarSystemSimulation.SolarSystem
         public Point3D Position { get; set; }
         public bool VisibleOrbits { get; set; } = true;
 
-        public AstronomicalObject(double radius)
+        public AstronomicalObject(Point3D position, double radius)
         {
+            Position = position;
+
             var meshBuilder = new MeshBuilder(true, true, true);
             meshBuilder.AddSphere(new Vector3(0, 0, 0), radius, 64, 64);
 
             Geometry = meshBuilder.ToMesh();
             CullMode = CullMode.Back;
 
-            _translateTransform3D = new TranslateTransform3D();
-            Transform = _translateTransform3D;
-
             _gravity = new Vector3D();
+
+            _translateTransform3D = new TranslateTransform3D();
+            Dispatcher?.Invoke(() =>
+            {
+                _translateTransform3D.OffsetX = Position.X / Au * 1e3;
+                _translateTransform3D.OffsetY = Position.Y / Au * 1e3;
+                _translateTransform3D.OffsetZ = Position.Z / Au * 1e3;
+            });
+
+            Transform = _translateTransform3D;
         }
 
         public void CalculateGravity(IEnumerable<AstronomicalObject> objects)
         {
-            _gravity.X = 0.0;
+            _gravity.X = 0;
             _gravity.Y = 0;
             _gravity.Z = 0;
 
@@ -59,12 +68,19 @@ namespace SolarSystemSimulation.SolarSystem
             Position += Velocity * dt;
             Velocity += _gravity * dt;
 
-            Dispatcher?.Invoke(() =>
+            try
             {
-                _translateTransform3D.OffsetX = Position.X / Au * 500;
-                _translateTransform3D.OffsetY = Position.Y / Au * 500;
-                _translateTransform3D.OffsetZ = Position.Z / Au * 500;
-            });
+                Dispatcher?.Invoke(() =>
+                {
+                    _translateTransform3D.OffsetX = Position.X / Au * 1e3;
+                    _translateTransform3D.OffsetY = Position.Y / Au * 1e3;
+                    _translateTransform3D.OffsetZ = Position.Z / Au * 1e3;
+                });
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
         }
     }
 }
