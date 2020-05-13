@@ -18,7 +18,7 @@ namespace SolarSystemSimulation.SolarSystem
         {
             Bodies = new List<AstronomicalObject>
             {
-                new AstronomicalObject(new Point3D(0, 0, 0), 109 * 2) /* sun */
+                new AstronomicalObject(new Point3D(0, 0, 0), 109) /* sun */
                 {
                     Mass = 333_000 * AstronomicalObject.Me,
                     Velocity = new Vector3D(0, 0, 0),
