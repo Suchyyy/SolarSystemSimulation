@@ -50,31 +50,7 @@ namespace SolarSystemSimulation.SolarSystem
                     Mass = AstronomicalObject.Me * 0.11,
                     Velocity = new Vector3D(0, 0, -24.13e3),
                     Material = DiffuseMaterials.Copper
-                },
-                new AstronomicalObject(new Point3D(AstronomicalObject.Au * 5.2, 0, 0), 112) /* jupiter */
-                {
-                    Mass = AstronomicalObject.Me * 317.89,
-                    Velocity = new Vector3D(0, 0, -13e3),
-                    Material = DiffuseMaterials.Yellow
-                },
-                new AstronomicalObject(new Point3D(AstronomicalObject.Au * 9.52, 0, 0), 94.5) /* saturn */
-                {
-                    Mass = AstronomicalObject.Me * 95.17,
-                    Velocity = new Vector3D(0, 0, -9.64e3),
-                    Material = DiffuseMaterials.Yellow
-                },
-                new AstronomicalObject(new Point3D(AstronomicalObject.Au * 19.16, 0, 0), 40.1) /* uranus */
-                {
-                    Mass = AstronomicalObject.Me * 14.54,
-                    Velocity = new Vector3D(0, 0, -6.81e3),
-                    Material = DiffuseMaterials.Blue
-                },
-                new AstronomicalObject(new Point3D(AstronomicalObject.Au * 30.047, 0, 0), 38.65) /* neptune */
-                {
-                    Mass = AstronomicalObject.Me * 17.15,
-                    Velocity = new Vector3D(0, 0, -5.43e3),
-                    Material = DiffuseMaterials.Blue
-                },
+                }
             };
 
             Orbits = new List<List<Point>>();
