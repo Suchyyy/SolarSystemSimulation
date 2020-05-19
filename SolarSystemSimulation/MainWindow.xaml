@@ -41,25 +41,27 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <Label Grid.ColumnSpan="2" FontWeight="Bold" FontSize="14" HorizontalContentAlignment="Center" Width="{Binding ActualWidth, ElementName=grid, Mode=OneWay}">Ustawienia</Label>
 
             <Separator Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Height="20" />
 
-            <Label Grid.Row="2" Grid.Column="0">Liczba planet</Label>
+            <Label Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left" Padding="0,5,5,5">Liczba planet</Label>
             <metro:NumericUpDown Grid.Row="2" Grid.Column="1" Value="{Binding Planets}" Minimum="1" Maximum="20" HorizontalAlignment="Stretch" />
 
-            <CheckBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" FlowDirection="RightToLeft">Układ podwójny</CheckBox>
+            <CheckBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" FlowDirection="RightToLeft" IsChecked="{Binding IsDouble}">Układ podwójny</CheckBox>
 
-            <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Margin="0, 10, 0, 10">Wygeneruj układ</Button>
+            <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Margin="0, 10, 0, 10" Click="GenerateSolarSystem_OnClick">Wygeneruj układ</Button>
+            <Button Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Margin="0, 10, 0, 10" Click="LoadSolarSystem_OnClick">Wczytaj układ słoneczny</Button>
 
-            <Separator Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Height="20" />
+            <Separator Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Height="20" />
 
-            <Label Grid.Row="6" Grid.Column="0">Czas trwania symulacji</Label>
-            <metro:NumericUpDown Grid.Row="6" Grid.Column="1" StringFormat="0 sec" Value="{Binding SimulationTime}" Minimum="10" Maximum="3600" />
+            <Label Grid.Row="7" Grid.Column="0">Czas trwania symulacji</Label>
+            <metro:NumericUpDown Grid.Row="7" Grid.Column="1" StringFormat="0 sec" Value="{Binding SimulationTime}" Minimum="10" Maximum="3600" />
 
-            <Button Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" Margin="0, 10, 0, 10" Click="StartSimulation_OnClick">Rozpocznij symulację</Button>
+            <Button Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" Margin="0, 10, 0, 10" Click="StartSimulation_OnClick" IsEnabled="{Binding CanStartSimulation.Value}">Rozpocznij symulację</Button>
         </Grid>
     </Grid>
 </metro:MetroWindow>

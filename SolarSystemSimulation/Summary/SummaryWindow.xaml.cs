@@ -18,7 +18,7 @@ namespace SolarSystemSimulation.Summary
         // ReSharper disable once SuggestBaseTypeForParameter
         public SummaryWindow(List<List<Point>> points, int sunCount = 1)
         {
-            Formatter = d => d.ToString("0.##", CultureInfo.InvariantCulture);
+            Formatter = d => d.ToString("0.#", CultureInfo.InvariantCulture);
             InitializeComponent();
 
             for (var i = 0; i < points.Count; i++)
@@ -28,8 +28,7 @@ namespace SolarSystemSimulation.Summary
                 {
                     Values = new ChartValues<ObservablePoint>(orbit.Select(point =>
                         new ObservablePoint(point.X, point.Y))),
-                    Fill = Brushes.Transparent,
-                    PointGeometry = null
+                    Fill = Brushes.Transparent
                 };
 
                 if (sunCount == 1 && i == 0)

@@ -9,9 +9,9 @@ namespace SolarSystemSimulation.SolarSystem
 {
     public class AstronomicalObject : MeshGeometryModel3D
     {
-        public static readonly double G = 6.6743e-11;
-        public static readonly double Au = 1.495e11;
-        public static readonly double Me = 5.9722e24;
+        public const double G = 6.6743e-11;
+        public const double Au = 1.495e11;
+        public const double Me = 5.9722e24;
 
         private readonly TranslateTransform3D _translateTransform3D;
 
