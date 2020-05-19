@@ -42,7 +42,7 @@ namespace SolarSystemSimulation.SolarSystem
                 Bodies.Add(new AstronomicalObject(new Point3D(-AstronomicalObject.Au * 0.3, 0, 0), 10.9 * 2) /* sun */
                 {
                     Mass = mass,
-                    Velocity = new Vector3D(0, 0, -47.89e3),
+                    Velocity = new Vector3D(0, 0, -80e3),
                     Material = new DiffuseMaterial
                     {
                         DiffuseMap = SunTexture

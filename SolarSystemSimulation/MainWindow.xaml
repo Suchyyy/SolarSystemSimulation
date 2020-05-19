@@ -22,6 +22,9 @@
                         EnableSwapChainRendering="True"
                         EffectsManager="{Binding EffectsManager}"
                         Camera="{Binding Camera}">
+            <hx:Viewport3DX.InputBindings>
+                <MouseBinding Command="hx:ViewportCommands.Pan" Gesture="LeftClick" />
+            </hx:Viewport3DX.InputBindings>
             <hx:AmbientLight3D Color="{Binding LightColor}" />
 
             <hx:EnvironmentMap3D Texture="{Binding EnvironmentMap}" />
