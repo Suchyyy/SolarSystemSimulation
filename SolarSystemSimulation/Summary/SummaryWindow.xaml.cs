@@ -27,8 +27,11 @@ namespace SolarSystemSimulation.Summary
                 var orbit = points[i];
                 var series = new LineSeries
                 {
-                    Values = new ChartValues<ObservablePoint>(orbit.Select(point =>
-                        new ObservablePoint(point.X / AstronomicalObject.Au, point.Z / AstronomicalObject.Au))),
+                    Values = new ChartValues<ObservablePoint>(orbit
+                        .Select((point, index) => new {point, index})
+                        .Where(x => x.index % 5 == 0)
+                        .Select(x =>
+                            new ObservablePoint(x.point.X / AstronomicalObject.Au, x.point.Z / AstronomicalObject.Au))),
                     Fill = Brushes.Transparent
                 };
 

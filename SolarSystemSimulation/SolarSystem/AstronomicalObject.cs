@@ -15,11 +15,19 @@ namespace SolarSystemSimulation.SolarSystem
 
         private readonly TranslateTransform3D _translateTransform3D;
 
-        private Vector3D _gravity;
         public double Mass { get; set; }
+
+        private Vector3D _gravity;
+
+        public Vector3D PrevVelocityDot { get; private set; }
+        public Vector3D PrevVelocityDot2 { get; private set; }
         public Vector3D Velocity { get; set; }
+
+        public Vector3D PrevPositionDot { get; private set; }
+        public Vector3D PrevPositionDot2 { get; private set; }
         public Point3D Position { get; set; }
-        public bool VisibleOrbits { get; set; } = true;
+
+        private int _step = 1;
 
         public AstronomicalObject(Point3D position, double radius)
         {
@@ -65,8 +73,46 @@ namespace SolarSystemSimulation.SolarSystem
 
         public void UpdatePosition(double dt)
         {
-            Position += Velocity * dt;
-            Velocity += _gravity * dt;
+            Vector3D tempPos;
+            Vector3D tempVel;
+
+            switch (_step)
+            {
+                case 1:
+                    _step++;
+
+                    PrevPositionDot = Velocity * dt;
+                    PrevVelocityDot = _gravity * dt;
+
+                    Position += PrevPositionDot;
+                    Velocity += PrevVelocityDot;
+                    break;
+                case 2:
+                    _step++;
+
+                    tempPos = Velocity * dt;
+                    tempVel = _gravity * dt;
+
+                    Position += tempPos * 1.5 - PrevPositionDot * 0.5;
+                    Velocity += tempVel * 1.5 - PrevVelocityDot * 0.5;
+
+                    PrevPositionDot = tempPos;
+                    PrevVelocityDot = tempVel;
+                    break;
+                default:
+                    tempPos = Velocity * dt;
+                    tempVel = _gravity * dt;
+
+                    Position += tempPos * 23f / 12f - PrevPositionDot * 16f / 12f + PrevPositionDot2 * 5f / 12f;
+                    Velocity += tempVel * 23f / 12f - PrevVelocityDot * 16f / 12f + PrevVelocityDot2 * 5f / 12f;
+
+                    PrevPositionDot2 = PrevPositionDot;
+                    PrevVelocityDot2 = PrevVelocityDot;
+
+                    PrevPositionDot = tempPos;
+                    PrevVelocityDot = tempVel;
+                    break;
+            }
 
             try
             {

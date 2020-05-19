@@ -30,7 +30,7 @@ namespace SolarSystemSimulation
         public ObservableValue<bool> CanStartSimulation { get; } = new ObservableValue<bool>();
 
         public int Planets { get; set; } = 5;
-        public int SimulationTime { get; set; } = 10;
+        public int SimulationTime { get; set; } = 60;
         public bool IsDouble { get; set; }
 
         public MainWindow()
@@ -39,7 +39,7 @@ namespace SolarSystemSimulation
 
             LightColor = new Color {R = 255, G = 255, B = 255, A = 155};
             EffectsManager = new DefaultEffectsManager();
-            Camera = new OrthographicCamera();
+            Camera = new PerspectiveCamera();
 
             InitializeComponent();
 
@@ -68,7 +68,7 @@ namespace SolarSystemSimulation
                 case PerspectiveCamera camera:
                     camera.FieldOfView = 60;
                     camera.FarPlaneDistance = AstronomicalObject.Au;
-                    camera.NearPlaneDistance = 0;
+                    camera.NearPlaneDistance = 1;
                     break;
                 case OrthographicCamera camera:
                     camera.FarPlaneDistance = AstronomicalObject.Au;

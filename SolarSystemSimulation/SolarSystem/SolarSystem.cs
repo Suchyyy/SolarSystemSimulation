@@ -113,29 +113,30 @@ namespace SolarSystemSimulation.SolarSystem
             var dt = 86_400.0 * dayScale / frames;
             var i = 1e9;
 
+            const float scale = 1.0f / (float) AstronomicalObject.Au * 1000;
+
             while (IsRunning)
             {
                 var task = Task.Delay(millisecondsDelay);
 
-                if (i > frames * 0.1)
+                if (i > frames / 15.0)
                 {
                     i = 0;
                     for (var j = 0; j < Bodies.Count; j++)
                     {
-                        var point3d = Bodies[j].Position;
-                        var orbit = Orbits[j];
+                        var next = Bodies[j].Position;
 
-                        orbit.Add(point3d);
-
-                        var count = orbit.Count;
-                        if (count < 2) continue;
+                        Orbits[j].Add(next);
 
                         var builder = OrbitBuilders[j];
                         var model = OrbitModels[j];
 
-                        builder.AddLine(orbit[count - 2].ToVector3() * (1.0f / (float) AstronomicalObject.Au * 1000),
-                            point3d.ToVector3() * (1.0f / (float) AstronomicalObject.Au * 1000));
+                        var count = Orbits[j].Count;
+                        if (count < 2) continue;
 
+                        var prev = Orbits[j][count - 2];
+
+                        builder.AddLine(prev.ToVector3() * scale, next.ToVector3() * scale);
                         model.Dispatcher?.Invoke(() => model.Geometry = builder.ToLineGeometry3D());
                     }
                 }
@@ -153,7 +154,7 @@ namespace SolarSystemSimulation.SolarSystem
         {
             return new List<AstronomicalObject>
             {
-                new AstronomicalObject(new Point3D(0, 0, 0), 10.9 * 2) /* sun */
+                new AstronomicalObject(new Point3D(0, 0, 0), 109 * 2) /* sun */
                 {
                     Mass = 333_000 * AstronomicalObject.Me,
                     Velocity = new Vector3D(0, 0, 0),
@@ -185,6 +186,30 @@ namespace SolarSystemSimulation.SolarSystem
                     Mass = AstronomicalObject.Me * 0.11,
                     Velocity = new Vector3D(0, 0, -24.13e3),
                     Material = DiffuseMaterials.Copper
+                },
+                new AstronomicalObject(new Point3D(AstronomicalObject.Au * 5.2, 0, 0), 112) /* jupiter */
+                {
+                    Mass = AstronomicalObject.Me * 317.87,
+                    Velocity = new Vector3D(0, 0, -13.06e3),
+                    Material = DiffuseMaterials.BlanchedAlmond,
+                },
+                new AstronomicalObject(new Point3D(AstronomicalObject.Au * 9.52, 0, 0), 5.3) /* saturn */
+                {
+                    Mass = AstronomicalObject.Me * 95.14,
+                    Velocity = new Vector3D(0, 0, -9.64e3),
+                    Material = DiffuseMaterials.Bisque
+                },
+                new AstronomicalObject(new Point3D(AstronomicalObject.Au * 19.16, 0, 0), 39.81) /* uranus */
+                {
+                    Mass = AstronomicalObject.Me * 14.56,
+                    Velocity = new Vector3D(0, 0, -6.8e3),
+                    Material = DiffuseMaterials.LightBlue
+                },
+                new AstronomicalObject(new Point3D(AstronomicalObject.Au * 30.06, 0, 0), 38.65) /* neptune */
+                {
+                    Mass = AstronomicalObject.Me * 17.21,
+                    Velocity = new Vector3D(0, 0, -5.43e3),
+                    Material = DiffuseMaterials.Blue
                 }
             };
         }
