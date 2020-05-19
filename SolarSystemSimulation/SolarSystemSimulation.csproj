@@ -52,11 +52,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="OrbitWindow.xaml.cs">
-      <DependentUpon>OrbitWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="SolarSystem\AstronomicalObject.cs" />
     <Compile Include="SolarSystem\SolarSystem.cs" />
+    <Compile Include="Summary\Legend\OrbitChartLegend.xaml.cs">
+      <DependentUpon>OrbitChartLegend.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Summary\Legend\OrbitSeriesViewModel.cs" />
+    <Compile Include="Summary\SummaryWindow.xaml.cs">
+      <DependentUpon>SummaryWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TextureHelper.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -70,7 +74,8 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="OrbitWindow.xaml" />
+    <Page Include="Summary\Legend\OrbitChartLegend.xaml" />
+    <Page Include="Summary\SummaryWindow.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

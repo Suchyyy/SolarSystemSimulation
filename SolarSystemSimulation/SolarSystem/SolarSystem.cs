@@ -18,7 +18,7 @@ namespace SolarSystemSimulation.SolarSystem
         {
             Bodies = new List<AstronomicalObject>
             {
-                new AstronomicalObject(new Point3D(0, 0, 0), 109) /* sun */
+                new AstronomicalObject(new Point3D(0, 0, 0), 10.9 * 2) /* sun */
                 {
                     Mass = 333_000 * AstronomicalObject.Me,
                     Velocity = new Vector3D(0, 0, 0),
@@ -41,7 +41,7 @@ namespace SolarSystemSimulation.SolarSystem
                 },
                 new AstronomicalObject(new Point3D(AstronomicalObject.Au, 0, 0), 10) /* earth */
                 {
-                    Mass = AstronomicalObject.Me,
+                    Mass = AstronomicalObject.Me * 1e6,
                     Velocity = new Vector3D(0, 0, -30e3),
                     Material = DiffuseMaterials.Blue
                 },
@@ -66,13 +66,13 @@ namespace SolarSystemSimulation.SolarSystem
 
             var millisecondsDelay = 1000 / frames;
             var dt = 86_400.0 * dayScale / frames;
-            var i = 100;
+            var i = 0;
 
             while (IsRunning)
             {
                 var task = Task.Delay(millisecondsDelay);
 
-                if (i > 50)
+                if (i > 25)
                 {
                     i = 0;
                     for (var i1 = 0; i1 < Bodies.Count; i1++)

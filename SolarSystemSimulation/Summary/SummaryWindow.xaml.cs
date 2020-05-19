@@ -1,25 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
+using System.Globalization;
 using System.Linq;
+using System.Windows;
+using System.Windows.Media;
 using LiveCharts;
 using LiveCharts.Defaults;
 using LiveCharts.Wpf;
 using MahApps.Metro.Controls;
-using Brushes = System.Windows.Media.Brushes;
-using Point = System.Windows.Point;
 
-namespace SolarSystemSimulation
+namespace SolarSystemSimulation.Summary
 {
-    public partial class OrbitWindow : MetroWindow
+    public partial class SummaryWindow : MetroWindow
     {
-        public Func<double, double> Formatter { get; set; }
+        public Func<double, string> Formatter { get; }
 
         // ReSharper disable once SuggestBaseTypeForParameter
-        public OrbitWindow(List<List<Point>> points, int sunCount = 1)
+        public SummaryWindow(List<List<Point>> points, int sunCount = 1)
         {
-            Formatter = d => Math.Round(d, 2);
-
+            Formatter = d => d.ToString("0.##", CultureInfo.InvariantCulture);
             InitializeComponent();
 
             for (var i = 0; i < points.Count; i++)
@@ -29,21 +28,16 @@ namespace SolarSystemSimulation
                 {
                     Values = new ChartValues<ObservablePoint>(orbit.Select(point =>
                         new ObservablePoint(point.X, point.Y))),
-                    Fill = Brushes.Transparent
+                    Fill = Brushes.Transparent,
+                    PointGeometry = null
                 };
 
                 if (sunCount == 1 && i == 0)
-                {
                     series.Title = "Gwiazda";
-                }
                 else if (sunCount > 1 && i < sunCount)
-                {
                     series.Title = $"Gwiazda {(char) (65 + i)}";
-                }
                 else
-                {
                     series.Title = $"Planeta {(char) (65 + i - sunCount)}";
-                }
 
                 Chart.Series.Add(series);
             }
