@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Windows;
 using System.Windows.Media;
+using System.Windows.Media.Media3D;
 using LiveCharts;
 using LiveCharts.Defaults;
 using LiveCharts.Wpf;
 using MahApps.Metro.Controls;
+using SolarSystemSimulation.SolarSystem;
 
 namespace SolarSystemSimulation.Summary
 {
@@ -16,9 +17,9 @@ namespace SolarSystemSimulation.Summary
         public Func<double, string> Formatter { get; }
 
         // ReSharper disable once SuggestBaseTypeForParameter
-        public SummaryWindow(List<List<Point>> points, int sunCount = 1)
+        public SummaryWindow(List<List<Point3D>> points, int sunCount = 1)
         {
-            Formatter = d => d.ToString("0.#", CultureInfo.InvariantCulture);
+            Formatter = d => d.ToString("0.##", CultureInfo.InvariantCulture);
             InitializeComponent();
 
             for (var i = 0; i < points.Count; i++)
@@ -27,7 +28,7 @@ namespace SolarSystemSimulation.Summary
                 var series = new LineSeries
                 {
                     Values = new ChartValues<ObservablePoint>(orbit.Select(point =>
-                        new ObservablePoint(point.X, point.Y))),
+                        new ObservablePoint(point.X / AstronomicalObject.Au, point.Z / AstronomicalObject.Au))),
                     Fill = Brushes.Transparent
                 };
 

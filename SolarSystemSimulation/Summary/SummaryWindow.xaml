@@ -7,7 +7,8 @@
                    xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
                    xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
                    mc:Ignorable="d"
-                   Title="Podsumowanie" Height="800" Width="800" d:DataContext="{d:DesignInstance}">
+                   Title="Podsumowanie" Height="800" Width="800"
+                   DataContext="{Binding RelativeSource={RelativeSource Self}}">
     <Grid>
         <lvc:CartesianChart Margin="10" LegendLocation="Top" x:Name="Chart">
             <lvc:CartesianChart.ChartLegend>

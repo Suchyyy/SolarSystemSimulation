@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows;
+using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using HelixToolkit.Wpf.SharpDX;
 using DiffuseMaterial = HelixToolkit.Wpf.SharpDX.DiffuseMaterial;
@@ -15,7 +15,9 @@ namespace SolarSystemSimulation.SolarSystem
         private static readonly MemoryStream SunTexture = TextureHelper.LoadFileToMemory(@"Resources\sun.jpg");
 
         public List<AstronomicalObject> Bodies { get; }
-        public List<List<Point>> Orbits { get; }
+        public List<LineGeometryModel3D> OrbitModels { get; }
+        public List<List<Point3D>> Orbits { get; }
+        public List<LineBuilder> OrbitBuilders { get; }
 
         public bool IsRunning { get; set; }
 
@@ -34,20 +36,19 @@ namespace SolarSystemSimulation.SolarSystem
                 }
             };
 
-            // if (stars > 1)
-            // {
-            //     var mass = AstronomicalObject.Me * 
-            //     
-            //     Bodies.Add(new AstronomicalObject(new Point3D(0, 0, 0), 10.9 * 2) /* sun */
-            //     {
-            //         Mass = 333_000 * AstronomicalObject.Me,
-            //         Velocity = new Vector3D(0, 0, 0),
-            //         Material = new DiffuseMaterial
-            //         {
-            //             DiffuseMap = SunTexture
-            //         }
-            //     });
-            // }
+            if (stars > 1)
+            {
+                var mass = 333_000 * AstronomicalObject.Me * Utils.GetNormalRandom(0.3, 0.05);
+                Bodies.Add(new AstronomicalObject(new Point3D(-AstronomicalObject.Au * 0.3, 0, 0), 10.9 * 2) /* sun */
+                {
+                    Mass = mass,
+                    Velocity = new Vector3D(0, 0, -47.89e3),
+                    Material = new DiffuseMaterial
+                    {
+                        DiffuseMap = SunTexture
+                    }
+                });
+            }
 
             var centerMass = Bodies.Sum(body => body.Mass);
 
@@ -69,22 +70,38 @@ namespace SolarSystemSimulation.SolarSystem
                 });
             }
 
-            Orbits = new List<List<Point>>();
+            Orbits = new List<List<Point3D>>();
+            OrbitBuilders = new List<LineBuilder>();
+            OrbitModels = new List<LineGeometryModel3D>();
 
             for (var i = 0; i < Bodies.Count; i++)
             {
-                Orbits.Add(new List<Point>());
+                OrbitBuilders.Add(new LineBuilder());
+                OrbitModels.Add(new LineGeometryModel3D
+                {
+                    Thickness = 0.5,
+                    Color = Colors.Yellow
+                });
+                Orbits.Add(new List<Point3D>());
             }
         }
 
         public SolarSystem(List<AstronomicalObject> bodies)
         {
             Bodies = bodies;
-            Orbits = new List<List<Point>>();
+            Orbits = new List<List<Point3D>>();
+            OrbitBuilders = new List<LineBuilder>();
+            OrbitModels = new List<LineGeometryModel3D>();
 
             for (var i = 0; i < Bodies.Count; i++)
             {
-                Orbits.Add(new List<Point>());
+                OrbitBuilders.Add(new LineBuilder());
+                OrbitModels.Add(new LineGeometryModel3D
+                {
+                    Thickness = 1,
+                    Color = Colors.Yellow
+                });
+                Orbits.Add(new List<Point3D>());
             }
         }
 
@@ -94,19 +111,32 @@ namespace SolarSystemSimulation.SolarSystem
 
             var millisecondsDelay = 1000 / frames;
             var dt = 86_400.0 * dayScale / frames;
-            var i = 0;
+            var i = 1e9;
 
             while (IsRunning)
             {
                 var task = Task.Delay(millisecondsDelay);
 
-                if (i > 25)
+                if (i > frames * 0.1)
                 {
                     i = 0;
-                    for (var i1 = 0; i1 < Bodies.Count; i1++)
+                    for (var j = 0; j < Bodies.Count; j++)
                     {
-                        var point3d = Bodies[i1].Position;
-                        Orbits[i1].Add(new Point(point3d.X / AstronomicalObject.Au, point3d.Z / AstronomicalObject.Au));
+                        var point3d = Bodies[j].Position;
+                        var orbit = Orbits[j];
+
+                        orbit.Add(point3d);
+
+                        var count = orbit.Count;
+                        if (count < 2) continue;
+
+                        var builder = OrbitBuilders[j];
+                        var model = OrbitModels[j];
+
+                        builder.AddLine(orbit[count - 2].ToVector3() * (1.0f / (float) AstronomicalObject.Au * 1000),
+                            point3d.ToVector3() * (1.0f / (float) AstronomicalObject.Au * 1000));
+
+                        model.Dispatcher?.Invoke(() => model.Geometry = builder.ToLineGeometry3D());
                     }
                 }
 

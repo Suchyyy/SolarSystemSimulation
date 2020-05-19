@@ -84,7 +84,7 @@ namespace SolarSystemSimulation
             var but = (Button) sender;
             but.IsEnabled = false;
 
-            Task.Run(() => _system.StartSimulation(240, 32));
+            Task.Run(() => _system.StartSimulation(60, 32));
             Task.Delay(TimeSpan.FromSeconds(SimulationTime)).ContinueWith(_ =>
             {
                 _system.IsRunning = false;
@@ -101,6 +101,7 @@ namespace SolarSystemSimulation
 
             _system = new SolarSystem.SolarSystem(IsDouble ? 2 : 1, Planets);
             _system.Bodies.ForEach(Viewport3DX.Items.Add);
+            _system.OrbitModels.ForEach(Viewport3DX.Items.Add);
             CanStartSimulation.Value = true;
         }
 
@@ -110,6 +111,7 @@ namespace SolarSystemSimulation
 
             _system = new SolarSystem.SolarSystem(SolarSystem.SolarSystem.GetSolarSystem());
             _system.Bodies.ForEach(Viewport3DX.Items.Add);
+            _system.OrbitModels.ForEach(Viewport3DX.Items.Add);
             CanStartSimulation.Value = true;
         }
 
@@ -117,7 +119,8 @@ namespace SolarSystemSimulation
         {
             for (var i = Viewport3DX.Items.Count - 1; i >= 0; i--)
             {
-                if (Viewport3DX.Items[i].GetType() == typeof(AstronomicalObject))
+                var type = Viewport3DX.Items[i].GetType();
+                if (type == typeof(AstronomicalObject) || type == typeof(LineGeometryModel3D))
                     Viewport3DX.Items.RemoveAt(i);
             }
         }
