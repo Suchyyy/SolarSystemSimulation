@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Media.Media3D;
 using HelixToolkit.Wpf.SharpDX;
 using SharpDX;
@@ -13,18 +14,18 @@ namespace SolarSystemSimulation.SolarSystem
         public const double Au = 1.495e11;
         public const double Me = 5.9722e24;
 
+        public string BodyName { get; set; }
+
         private readonly TranslateTransform3D _translateTransform3D;
 
         public double Mass { get; set; }
 
         private Vector3D _gravity;
 
-        public Vector3D PrevVelocityDot { get; private set; }
-        public Vector3D PrevVelocityDot2 { get; private set; }
+        private readonly Vector3D[] _velocityDots = Enumerable.Range(0, 3).Select(i => new Vector3D(0, 0, 0)).ToArray();
         public Vector3D Velocity { get; set; }
 
-        public Vector3D PrevPositionDot { get; private set; }
-        public Vector3D PrevPositionDot2 { get; private set; }
+        private readonly Vector3D[] _positionDots = Enumerable.Range(0, 3).Select(i => new Vector3D(0, 0, 0)).ToArray();
         public Point3D Position { get; set; }
 
         private int _step = 1;
@@ -73,46 +74,15 @@ namespace SolarSystemSimulation.SolarSystem
 
         public void UpdatePosition(double dt)
         {
-            Vector3D tempPos;
-            Vector3D tempVel;
-
+            // @formatter:off
             switch (_step)
             {
-                case 1:
-                    _step++;
-
-                    PrevPositionDot = Velocity * dt;
-                    PrevVelocityDot = _gravity * dt;
-
-                    Position += PrevPositionDot;
-                    Velocity += PrevVelocityDot;
-                    break;
-                case 2:
-                    _step++;
-
-                    tempPos = Velocity * dt;
-                    tempVel = _gravity * dt;
-
-                    Position += tempPos * 1.5 - PrevPositionDot * 0.5;
-                    Velocity += tempVel * 1.5 - PrevVelocityDot * 0.5;
-
-                    PrevPositionDot = tempPos;
-                    PrevVelocityDot = tempVel;
-                    break;
-                default:
-                    tempPos = Velocity * dt;
-                    tempVel = _gravity * dt;
-
-                    Position += tempPos * 23f / 12f - PrevPositionDot * 16f / 12f + PrevPositionDot2 * 5f / 12f;
-                    Velocity += tempVel * 23f / 12f - PrevVelocityDot * 16f / 12f + PrevVelocityDot2 * 5f / 12f;
-
-                    PrevPositionDot2 = PrevPositionDot;
-                    PrevVelocityDot2 = PrevVelocityDot;
-
-                    PrevPositionDot = tempPos;
-                    PrevVelocityDot = tempVel;
-                    break;
+                case 1: Step1(dt); break;
+                case 2: Step2(dt); break;
+                case 3: Step3(dt); break;
+                default: Step4(dt); break;
             }
+            // @formatter:on
 
             try
             {
@@ -127,6 +97,81 @@ namespace SolarSystemSimulation.SolarSystem
             {
                 // ignored
             }
+        }
+
+        private void Step1(double dt)
+        {
+            _step++;
+
+            _positionDots[0] = Velocity * dt;
+            _velocityDots[0] = _gravity * dt;
+
+            Position += _positionDots[0];
+            Velocity += _velocityDots[0];
+        }
+
+        private void Step2(double dt)
+        {
+            _step++;
+
+            var tempPos = Velocity * dt;
+            var tempVel = _gravity * dt;
+
+            Position += tempPos * 1.5f - _positionDots[0] * 0.5f;
+            Velocity += tempVel * 1.5f - _velocityDots[0] * 0.5f;
+
+            _positionDots[0] = tempPos;
+            _velocityDots[0] = tempVel;
+        }
+
+        private void Step3(double dt)
+        {
+            _step++;
+
+            const float p1 = 23f / 12f;
+            const float p2 = 16f / 12f;
+            const float p3 = 5f / 12f;
+
+            var tempPos = Velocity * dt;
+            var tempVel = _gravity * dt;
+
+            Position += tempPos * p1 - _positionDots[0] * p2 + _positionDots[1] * p3;
+            Velocity += tempVel * p1 - _velocityDots[0] * p2 + _velocityDots[1] * p3;
+
+            _positionDots[1] = _positionDots[0];
+            _velocityDots[1] = _velocityDots[0];
+
+            _positionDots[0] = tempPos;
+            _velocityDots[0] = tempVel;
+        }
+
+        private void Step4(double dt)
+        {
+            const float p1 = 54f / 24f;
+            const float p2 = 59f / 24f;
+            const float p3 = 37f / 24f;
+            const float p4 = 9f / 24f;
+
+            var tempPos = Velocity * dt;
+            var tempVel = _gravity * dt;
+
+            Position += tempPos * p1
+                        - _positionDots[0] * p2
+                        + _positionDots[1] * p3
+                        - _positionDots[2] * p4;
+            Velocity += tempVel * p1
+                        - _velocityDots[0] * p2
+                        + _velocityDots[1] * p3
+                        - _velocityDots[2] * p4;
+
+            _positionDots[2] = _positionDots[1];
+            _velocityDots[2] = _velocityDots[1];
+
+            _positionDots[1] = _positionDots[0];
+            _velocityDots[1] = _velocityDots[0];
+
+            _positionDots[0] = tempPos;
+            _velocityDots[0] = tempVel;
         }
     }
 }

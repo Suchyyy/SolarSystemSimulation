@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
@@ -8,7 +9,6 @@ using HelixToolkit.Wpf.SharpDX;
 using HelixToolkit.Wpf.SharpDX.Utilities;
 using SharpDX;
 using SolarSystemSimulation.SolarSystem;
-using SolarSystemSimulation.Summary;
 using Camera = HelixToolkit.Wpf.SharpDX.Camera;
 using OrthographicCamera = HelixToolkit.Wpf.SharpDX.OrthographicCamera;
 using PerspectiveCamera = HelixToolkit.Wpf.SharpDX.PerspectiveCamera;
@@ -33,8 +33,13 @@ namespace SolarSystemSimulation
         public int SimulationTime { get; set; } = 60;
         public bool IsDouble { get; set; }
 
+        public ObservableCollection<AstronomicalObject> Bodies { get; set; } =
+            new ObservableCollection<AstronomicalObject>();
+        
         public MainWindow()
         {
+            DataContext = this;
+
             EnvironmentMap = TextureHelper.LoadFileToMemory(@"Resources\skymap.dds");
 
             LightColor = new Color {R = 255, G = 255, B = 255, A = 155};
@@ -45,6 +50,8 @@ namespace SolarSystemSimulation
 
             Loaded += (sender, args) => InitCamera();
             Viewport3DX.SizeChanged += OnSizeChanged;
+
+            DataContext = this;
         }
 
         private void OnSizeChanged(object sender, SizeChangedEventArgs e)
@@ -84,14 +91,11 @@ namespace SolarSystemSimulation
             var but = (Button) sender;
             but.IsEnabled = false;
 
-            Task.Run(() => _system.StartSimulation(60, 32));
+            Task.Run(() => _system.StartSimulation(240, 32));
             Task.Delay(TimeSpan.FromSeconds(SimulationTime)).ContinueWith(_ =>
             {
                 _system.IsRunning = false;
                 but.Dispatcher?.Invoke(() => but.IsEnabled = true);
-
-                Application.Current.Dispatcher?.Invoke(() =>
-                    new SummaryWindow(_system.Orbits, IsDouble ? 2 : 1).Show());
             });
         }
 
@@ -100,7 +104,11 @@ namespace SolarSystemSimulation
             RemoveAllBodies();
 
             _system = new SolarSystem.SolarSystem(IsDouble ? 2 : 1, Planets);
-            _system.Bodies.ForEach(Viewport3DX.Items.Add);
+            _system.Bodies.ForEach(body =>
+            {
+                Viewport3DX.Items.Add(body);
+                Bodies.Add(body);
+            });
             _system.OrbitModels.ForEach(Viewport3DX.Items.Add);
             CanStartSimulation.Value = true;
         }
@@ -110,13 +118,18 @@ namespace SolarSystemSimulation
             RemoveAllBodies();
 
             _system = new SolarSystem.SolarSystem(SolarSystem.SolarSystem.GetSolarSystem());
-            _system.Bodies.ForEach(Viewport3DX.Items.Add);
+            _system.Bodies.ForEach(body =>
+            {
+                Viewport3DX.Items.Add(body);
+                Bodies.Add(body);
+            });
             _system.OrbitModels.ForEach(Viewport3DX.Items.Add);
             CanStartSimulation.Value = true;
         }
 
         private void RemoveAllBodies()
         {
+            Bodies.Clear();
             for (var i = Viewport3DX.Items.Count - 1; i >= 0; i--)
             {
                 var type = Viewport3DX.Items[i].GetType();
