@@ -106,8 +106,8 @@ namespace SolarSystemSimulation.SolarSystem
             _positionDots[0] = Velocity * dt;
             _velocityDots[0] = _gravity * dt;
 
-            Position += _positionDots[0];
             Velocity += _velocityDots[0];
+            Position += _positionDots[0];
         }
 
         private void Step2(double dt)
@@ -117,8 +117,8 @@ namespace SolarSystemSimulation.SolarSystem
             var tempPos = Velocity * dt;
             var tempVel = _gravity * dt;
 
-            Position += tempPos * 1.5f - _positionDots[0] * 0.5f;
-            Velocity += tempVel * 1.5f - _velocityDots[0] * 0.5f;
+            Velocity += tempVel * 1.5 - _velocityDots[0] * 0.5;
+            Position += tempPos * 1.5 - _positionDots[0] * 0.5;
 
             _positionDots[0] = tempPos;
             _velocityDots[0] = tempVel;
@@ -128,15 +128,15 @@ namespace SolarSystemSimulation.SolarSystem
         {
             _step++;
 
-            const float p1 = 23f / 12f;
-            const float p2 = 16f / 12f;
-            const float p3 = 5f / 12f;
+            const double p1 = 23.0 / 12.0;
+            const double p2 = 16.0 / 12.0;
+            const double p3 = 5.0 / 12.0;
 
             var tempPos = Velocity * dt;
             var tempVel = _gravity * dt;
 
-            Position += tempPos * p1 - _positionDots[0] * p2 + _positionDots[1] * p3;
             Velocity += tempVel * p1 - _velocityDots[0] * p2 + _velocityDots[1] * p3;
+            Position += tempPos * p1 - _positionDots[0] * p2 + _positionDots[1] * p3;
 
             _positionDots[1] = _positionDots[0];
             _velocityDots[1] = _velocityDots[0];
@@ -147,22 +147,23 @@ namespace SolarSystemSimulation.SolarSystem
 
         private void Step4(double dt)
         {
-            const float p1 = 54f / 24f;
-            const float p2 = 59f / 24f;
-            const float p3 = 37f / 24f;
-            const float p4 = 9f / 24f;
+            const double p1 = 54.0 / 24.0;
+            const double p2 = 59.0 / 24.0;
+            const double p3 = 37.0 / 24.0;
+            const double p4 = 9.0 / 24.0;
 
             var tempPos = Velocity * dt;
             var tempVel = _gravity * dt;
+
+            Velocity += tempVel * p1
+                        - _velocityDots[0] * p2
+                        + _velocityDots[1] * p3
+                        - _velocityDots[2] * p4;
 
             Position += tempPos * p1
                         - _positionDots[0] * p2
                         + _positionDots[1] * p3
                         - _positionDots[2] * p4;
-            Velocity += tempVel * p1
-                        - _velocityDots[0] * p2
-                        + _velocityDots[1] * p3
-                        - _velocityDots[2] * p4;
 
             _positionDots[2] = _positionDots[1];
             _velocityDots[2] = _velocityDots[1];

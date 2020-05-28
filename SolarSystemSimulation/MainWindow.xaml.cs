@@ -92,7 +92,7 @@ namespace SolarSystemSimulation
             var but = (Button) sender;
             but.IsEnabled = false;
 
-            Task.Run(() => _system.StartSimulation(240, TimeScale));
+            Task.Run(() => _system.StartSimulation(480, TimeScale));
             Task.Delay(TimeSpan.FromSeconds(SimulationTime)).ContinueWith(_ =>
             {
                 _system.IsRunning = false;

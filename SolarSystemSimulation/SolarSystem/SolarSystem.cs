@@ -41,13 +41,13 @@ namespace SolarSystemSimulation.SolarSystem
             if (stars > 1)
             {
                 var mass = 333_000 * AstronomicalObject.Me * Utils.GetNormalRandom(1, 0.2);
-                var position = -AstronomicalObject.Au * 0.2;
+                var position = -AstronomicalObject.Au * 0.3;
 
                 Bodies.Add(new AstronomicalObject(new Point3D(position, 0, 0), 10.9) /* sun */
                 {
                     BodyName = "Gwiazda B",
                     Mass = mass,
-                    Velocity = new Vector3D(0, 0, -GetVelocity(Math.Abs(position), Bodies[0].Mass + mass)) * 1.1,
+                    Velocity = new Vector3D(0, 0, -GetVelocity(Math.Abs(position), Bodies[0].Mass + mass)) * 1.15,
                     Material = new DiffuseMaterial
                     {
                         DiffuseMap = SunTexture
@@ -61,9 +61,9 @@ namespace SolarSystemSimulation.SolarSystem
 
             for (var i = 1; i <= planets; i++)
             {
-                var mass = Utils.GetNormalRandom(me * 2, me * 0.5);
-                var position = new Point3D(Utils.GetNormalRandom(au * i / 2.0, au * 0.2), 0, 0);
-                var velocity = GetVelocity(position.X, centerMass);
+                var mass = Utils.GetNormalRandom(me * 2, me * 0.8);
+                var position = new Point3D(Utils.GetNormalRandom(au * i * 0.7, au * 0.1), 0, 0);
+                var velocity = GetVelocity(position.X, centerMass) * Utils.GetNormalRandom(1.1, 0.1);
                 var a = Utils.GetNormalRandom(0, Math.PI * 0.05);
 
                 Bodies.Add(new AstronomicalObject(position, mass / me * 5)
@@ -113,7 +113,7 @@ namespace SolarSystemSimulation.SolarSystem
             }
         }
 
-        public async void StartSimulation(int frames, int dayScale)
+        public void StartSimulation(int frames, int dayScale)
         {
             IsRunning = true;
 
@@ -123,7 +123,6 @@ namespace SolarSystemSimulation.SolarSystem
             var frameTime = 1000 / frames;
 
             var last = sw.ElapsedMilliseconds;
-            var delta = 0.0;
             var i = 1e9;
 
             const float scale = 1.0f / (float) AstronomicalObject.Au * 1000;
@@ -131,7 +130,7 @@ namespace SolarSystemSimulation.SolarSystem
             while (IsRunning)
             {
                 var now = sw.ElapsedMilliseconds;
-                delta = now - last;
+                double delta = now - last;
 
                 if (i > 4)
                 {
@@ -170,70 +169,72 @@ namespace SolarSystemSimulation.SolarSystem
                 new AstronomicalObject(new Point3D(0, 0, 0), 109 * 2)
                 {
                     BodyName = "Słońce",
-                    Mass = 333_000 * AstronomicalObject.Me,
+                    Mass = 332_950 * AstronomicalObject.Me,
                     Velocity = new Vector3D(0, 0, 0),
                     Material = new DiffuseMaterial
                     {
                         DiffuseMap = SunTexture
                     }
                 },
-                new AstronomicalObject(new Point3D(AstronomicalObject.Au * 0.39, 0, 0), 3.8)
+                new AstronomicalObject(new Point3D(AstronomicalObject.Au * 0.3075, 0, 0), 3.8)
                 {
                     BodyName = "Merkury",
-                    Mass = AstronomicalObject.Me * 0.06,
+                    Mass = AstronomicalObject.Me * 0.0552,
                     Velocity =
-                        new Vector3D(0, -47.89e3 * Math.Sin(ToRadians(7.0)), -47.89e3 * Math.Cos(ToRadians(7.0))),
+                        new Vector3D(0, -58.98e3 * Math.Sin(ToRadians(7.0)), -58.98e3 * Math.Cos(ToRadians(7.0))),
                     Material = DiffuseMaterials.Yellow
                 },
-                new AstronomicalObject(new Point3D(AstronomicalObject.Au * 0.72, 0, 0), 9.5)
+                new AstronomicalObject(new Point3D(AstronomicalObject.Au * 0.71843270, 0, 0), 9.5)
                 {
                     BodyName = "Wenus",
-                    Mass = AstronomicalObject.Me * 0.81,
-                    Velocity = new Vector3D(0, -35e3 * Math.Sin(ToRadians(3.4)), -35e3 * Math.Cos(ToRadians(3.4))),
+                    Mass = AstronomicalObject.Me * 0.8149,
+                    Velocity = new Vector3D(0, -35.259e3 * Math.Sin(ToRadians(3.4)),
+                        -35.259e3 * Math.Cos(ToRadians(3.4))),
                     Material = DiffuseMaterials.Yellow
                 },
-                new AstronomicalObject(new Point3D(AstronomicalObject.Au, 0, 0), 10)
+                new AstronomicalObject(new Point3D(AstronomicalObject.Au * 0.98329134, 0, 0), 10)
                 {
                     BodyName = "Ziemia",
                     Mass = AstronomicalObject.Me,
-                    Velocity = new Vector3D(0, 0, -30e3),
+                    Velocity = new Vector3D(0, 0, -30.29e3),
                     Material = DiffuseMaterials.Blue
                 },
-                new AstronomicalObject(new Point3D(AstronomicalObject.Au * 1.52, 0, 0), 5.3)
+                new AstronomicalObject(new Point3D(AstronomicalObject.Au * 1.3814, 0, 0), 5.3)
                 {
                     BodyName = "Mars",
-                    Mass = AstronomicalObject.Me * 0.11,
+                    Mass = AstronomicalObject.Me * 0.1074,
                     Velocity =
-                        new Vector3D(0, -24.13e3 * Math.Sin(ToRadians(1.9)), -24.13e3 * Math.Cos(ToRadians(1.9))),
+                        new Vector3D(0, -26.5e3 * Math.Sin(ToRadians(1.9)), -26.5e3 * Math.Cos(ToRadians(1.9))),
                     Material = DiffuseMaterials.Copper
                 },
-                new AstronomicalObject(new Point3D(AstronomicalObject.Au * 5.2, 0, 0), 112)
+                new AstronomicalObject(new Point3D(AstronomicalObject.Au * 5.034, 0, 0), 112)
                 {
                     BodyName = "Jowisz",
-                    Mass = AstronomicalObject.Me * 317.87,
+                    Mass = AstronomicalObject.Me * 317.83,
                     Velocity =
-                        new Vector3D(0, -13.06e3 * Math.Sin(ToRadians(1.3)), -13.06e3 * Math.Cos(ToRadians(1.3))),
+                        new Vector3D(0, -13.72e3 * Math.Sin(ToRadians(1.3)), -13.72e3 * Math.Cos(ToRadians(1.3))),
                     Material = DiffuseMaterials.BlanchedAlmond,
                 },
-                new AstronomicalObject(new Point3D(AstronomicalObject.Au * 9.52, 0, 0), 5.3)
+                new AstronomicalObject(new Point3D(AstronomicalObject.Au * 9.195, 0, 0), 5.3)
                 {
                     BodyName = "Saturn",
-                    Mass = AstronomicalObject.Me * 95.14,
-                    Velocity = new Vector3D(0, -9.64e3 * Math.Sin(ToRadians(2.5)), -9.64e3 * Math.Cos(ToRadians(2.5))),
+                    Mass = AstronomicalObject.Me * 95.1620,
+                    Velocity =
+                        new Vector3D(0, -10.18e3 * Math.Sin(ToRadians(2.5)), -10.18e3 * Math.Cos(ToRadians(2.5))),
                     Material = DiffuseMaterials.Bisque
                 },
-                new AstronomicalObject(new Point3D(AstronomicalObject.Au * 19.16, 0, 0), 39.81)
+                new AstronomicalObject(new Point3D(AstronomicalObject.Au * 18.637, 0, 0), 39.81)
                 {
                     BodyName = "Uran",
-                    Mass = AstronomicalObject.Me * 14.56,
-                    Velocity = new Vector3D(0, -6.8e3 * Math.Sin(ToRadians(0.8)), -6.8e3 * Math.Cos(ToRadians(0.8))),
+                    Mass = AstronomicalObject.Me * 14.536,
+                    Velocity = new Vector3D(0, -7.11e3 * Math.Sin(ToRadians(0.8)), -7.11e3 * Math.Cos(ToRadians(0.8))),
                     Material = DiffuseMaterials.LightBlue
                 },
-                new AstronomicalObject(new Point3D(AstronomicalObject.Au * 30.06, 0, 0), 38.65)
+                new AstronomicalObject(new Point3D(AstronomicalObject.Au * 30.216, 0, 0), 38.65)
                 {
                     BodyName = "Neptun",
-                    Mass = AstronomicalObject.Me * 17.21,
-                    Velocity = new Vector3D(0, -5.43e3 * Math.Sin(ToRadians(1.8)), -5.43e3 * Math.Cos(ToRadians(1.8))),
+                    Mass = AstronomicalObject.Me * 17.1470,
+                    Velocity = new Vector3D(0, -5.5e3 * Math.Sin(ToRadians(1.8)), -5.5e3 * Math.Cos(ToRadians(1.8))),
                     Material = DiffuseMaterials.Blue
                 }
             };

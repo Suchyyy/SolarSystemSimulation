@@ -90,11 +90,12 @@
         <None Include="App.config" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="HelixToolkit.Wpf.SharpDX" Version="2.11.0" />
-        <PackageReference Include="MahApps.Metro" Version="2.0.0-alpha0821" />
-        <PackageReference Include="MaterialDesignColors" Version="1.2.5-ci1442" />
-        <PackageReference Include="MaterialDesignThemes" Version="3.1.2-ci1442" />
-        <PackageReference Include="MaterialDesignThemes.MahApps" Version="0.1.2-ci1442" />
+        <PackageReference Include="Costura.Fody" Version="4.1.0" />
+        <PackageReference Include="HelixToolkit.Wpf.SharpDX" Version="2.12.0" />
+        <PackageReference Include="MahApps.Metro" Version="2.0.0" />
+        <PackageReference Include="MaterialDesignColors" Version="1.2.6" />
+        <PackageReference Include="MaterialDesignThemes" Version="3.2.0-ci1494" />
+        <PackageReference Include="MaterialDesignThemes.MahApps" Version="0.1.4" />
     </ItemGroup>
     <ItemGroup>
         <Content Include="..\.gitignore">
