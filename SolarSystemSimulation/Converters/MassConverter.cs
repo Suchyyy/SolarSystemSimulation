@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows.Data;
 using SolarSystemSimulation.SolarSystem;
 
-namespace SolarSystemSimulation
+namespace SolarSystemSimulation.Converters
 {
     public class MassConverter : IValueConverter
     {
@@ -18,9 +18,11 @@ namespace SolarSystemSimulation
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var massString = value.ToString().Split(' ')[0];
+            var massString = value?.ToString().Split(' ')[0];
 
-            return double.Parse(massString) * AstronomicalObject.Me;
+            if (massString != null)
+                return double.Parse(massString) * AstronomicalObject.Me;
+            return null;
         }
     }
 }

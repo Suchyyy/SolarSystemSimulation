@@ -6,14 +6,15 @@
                    xmlns:local="clr-namespace:SolarSystemSimulation"
                    xmlns:hx="http://helix-toolkit.org/wpf/SharpDX"
                    xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
+                   xmlns:converters="clr-namespace:SolarSystemSimulation.Converters"
                    mc:Ignorable="d"
                    Title="Solar System Simulation" Height="900" Width="1600" MinHeight="720" MinWidth="1280" d:DataContext="{d:DesignInstance}">
     <metro:MetroWindow.Resources>
-        <local:MassConverter x:Key="MassConverter" />
+        <converters:MassConverter x:Key="MassConverter" />
     </metro:MetroWindow.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="5*" />
+            <ColumnDefinition Width="4*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <hx:Viewport3DX x:Name="Viewport3DX"
@@ -35,9 +36,10 @@
         <Grid x:Name="grid" Grid.Column="1" Margin="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition MaxWidth="110" />
+                <ColumnDefinition MaxWidth="120" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -64,17 +66,19 @@
 
             <Separator Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Height="20" />
 
-            <Label Grid.Row="7" Grid.Column="0">Czas trwania symulacji</Label>
-            <metro:NumericUpDown Grid.Row="7" Grid.Column="1" StringFormat="0 sec" Value="{Binding SimulationTime}" Minimum="10" Maximum="3600" />
+            <Label Grid.Row="7" Grid.Column="0">Przyspieszenie symulacji</Label>
+            <metro:NumericUpDown Grid.Row="7" Grid.Column="1" StringFormat="0 day/s" TextAlignment="Left" Value="{Binding TimeScale}" Minimum="1" Maximum="365" />
 
-            <Button Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" Margin="0, 10, 0, 10" Click="StartSimulation_OnClick" IsEnabled="{Binding CanStartSimulation.Value}">Rozpocznij symulację</Button>
+            <Label Grid.Row="8" Grid.Column="0">Czas trwania symulacji</Label>
+            <metro:NumericUpDown Grid.Row="8" Grid.Column="1" StringFormat="0 sec" TextAlignment="Left" Value="{Binding SimulationTime}" Minimum="10" Maximum="3600" />
 
-            <ListView Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding Bodies}">
+            <Button Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" Margin="0, 10, 0, 10" Click="StartSimulation_OnClick" IsEnabled="{Binding CanStartSimulation.Value}">Rozpocznij symulację</Button>
 
+            <ListView Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding Bodies}">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="Obiekt" Width="80" DisplayMemberBinding="{Binding BodyName}" />
-                        <GridViewColumn Header="Masa" Width="130" DisplayMemberBinding="{Binding Mass, Converter={StaticResource MassConverter}}" />
+                        <GridViewColumn Header="Obiekt" Width="145" DisplayMemberBinding="{Binding BodyName}" />
+                        <GridViewColumn Header="Masa" Width="150" DisplayMemberBinding="{Binding Mass, Converter={StaticResource MassConverter}}" />
                     </GridView>
                 </ListView.View>
             </ListView>

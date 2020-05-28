@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using HelixToolkit.Wpf.SharpDX;
@@ -63,7 +64,7 @@ namespace SolarSystemSimulation.SolarSystem
                 var mass = Utils.GetNormalRandom(me * 2, me * 0.5);
                 var position = new Point3D(Utils.GetNormalRandom(au * i / 2.0, au * 0.2), 0, 0);
                 var velocity = GetVelocity(position.X, centerMass);
-                var a = Utils.GetNormalRandom(0, Math.PI * 0.1);
+                var a = Utils.GetNormalRandom(0, Math.PI * 0.05);
 
                 Bodies.Add(new AstronomicalObject(position, mass / me * 5)
                 {
@@ -116,15 +117,21 @@ namespace SolarSystemSimulation.SolarSystem
         {
             IsRunning = true;
 
-            var millisecondsDelay = 1000 / frames;
-            var dt = 86_400.0 * dayScale / frames;
+            var sw = new Stopwatch();
+            sw.Start();
+
+            var frameTime = 1000 / frames;
+
+            var last = sw.ElapsedMilliseconds;
+            var delta = 0.0;
             var i = 1e9;
 
             const float scale = 1.0f / (float) AstronomicalObject.Au * 1000;
 
             while (IsRunning)
             {
-                var task = Task.Delay(millisecondsDelay);
+                var now = sw.ElapsedMilliseconds;
+                delta = now - last;
 
                 if (i > 4)
                 {
@@ -145,11 +152,14 @@ namespace SolarSystemSimulation.SolarSystem
                 }
 
                 Bodies.ForEach(body => body.CalculateGravity(Bodies));
-                Bodies.ForEach(body => body.UpdatePosition(dt));
+                Bodies.ForEach(body => body.UpdatePosition(86_400.0 * dayScale / frames));
+
+                last = now;
 
                 i++;
 
-                await task;
+                if (delta < frameTime)
+                    Thread.Sleep(frameTime - (int) delta);
             }
         }
 
@@ -171,14 +181,15 @@ namespace SolarSystemSimulation.SolarSystem
                 {
                     BodyName = "Merkury",
                     Mass = AstronomicalObject.Me * 0.06,
-                    Velocity = new Vector3D(0, 0, -47.89e3),
+                    Velocity =
+                        new Vector3D(0, -47.89e3 * Math.Sin(ToRadians(7.0)), -47.89e3 * Math.Cos(ToRadians(7.0))),
                     Material = DiffuseMaterials.Yellow
                 },
                 new AstronomicalObject(new Point3D(AstronomicalObject.Au * 0.72, 0, 0), 9.5)
                 {
                     BodyName = "Wenus",
                     Mass = AstronomicalObject.Me * 0.81,
-                    Velocity = new Vector3D(0, 0, -35e3),
+                    Velocity = new Vector3D(0, -35e3 * Math.Sin(ToRadians(3.4)), -35e3 * Math.Cos(ToRadians(3.4))),
                     Material = DiffuseMaterials.Yellow
                 },
                 new AstronomicalObject(new Point3D(AstronomicalObject.Au, 0, 0), 10)
@@ -192,35 +203,37 @@ namespace SolarSystemSimulation.SolarSystem
                 {
                     BodyName = "Mars",
                     Mass = AstronomicalObject.Me * 0.11,
-                    Velocity = new Vector3D(0, 0, -24.13e3),
+                    Velocity =
+                        new Vector3D(0, -24.13e3 * Math.Sin(ToRadians(1.9)), -24.13e3 * Math.Cos(ToRadians(1.9))),
                     Material = DiffuseMaterials.Copper
                 },
                 new AstronomicalObject(new Point3D(AstronomicalObject.Au * 5.2, 0, 0), 112)
                 {
                     BodyName = "Jowisz",
                     Mass = AstronomicalObject.Me * 317.87,
-                    Velocity = new Vector3D(0, 0, -13.06e3),
+                    Velocity =
+                        new Vector3D(0, -13.06e3 * Math.Sin(ToRadians(1.3)), -13.06e3 * Math.Cos(ToRadians(1.3))),
                     Material = DiffuseMaterials.BlanchedAlmond,
                 },
                 new AstronomicalObject(new Point3D(AstronomicalObject.Au * 9.52, 0, 0), 5.3)
                 {
                     BodyName = "Saturn",
                     Mass = AstronomicalObject.Me * 95.14,
-                    Velocity = new Vector3D(0, 0, -9.64e3),
+                    Velocity = new Vector3D(0, -9.64e3 * Math.Sin(ToRadians(2.5)), -9.64e3 * Math.Cos(ToRadians(2.5))),
                     Material = DiffuseMaterials.Bisque
                 },
                 new AstronomicalObject(new Point3D(AstronomicalObject.Au * 19.16, 0, 0), 39.81)
                 {
                     BodyName = "Uran",
                     Mass = AstronomicalObject.Me * 14.56,
-                    Velocity = new Vector3D(0, 0, -6.8e3),
+                    Velocity = new Vector3D(0, -6.8e3 * Math.Sin(ToRadians(0.8)), -6.8e3 * Math.Cos(ToRadians(0.8))),
                     Material = DiffuseMaterials.LightBlue
                 },
                 new AstronomicalObject(new Point3D(AstronomicalObject.Au * 30.06, 0, 0), 38.65)
                 {
                     BodyName = "Neptun",
                     Mass = AstronomicalObject.Me * 17.21,
-                    Velocity = new Vector3D(0, 0, -5.43e3),
+                    Velocity = new Vector3D(0, -5.43e3 * Math.Sin(ToRadians(1.8)), -5.43e3 * Math.Cos(ToRadians(1.8))),
                     Material = DiffuseMaterials.Blue
                 }
             };
@@ -229,6 +242,11 @@ namespace SolarSystemSimulation.SolarSystem
         private static double GetVelocity(double distance, double centerMass)
         {
             return Math.Sqrt(AstronomicalObject.G * centerMass / distance);
+        }
+
+        private static double ToRadians(double angle)
+        {
+            return angle * Math.PI / 180.0;
         }
     }
 }

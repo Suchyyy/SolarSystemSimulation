@@ -31,6 +31,7 @@ namespace SolarSystemSimulation
 
         public int Planets { get; set; } = 5;
         public int SimulationTime { get; set; } = 60;
+        public int TimeScale { get; set; } = 36;
         public bool IsDouble { get; set; }
 
         public ObservableCollection<AstronomicalObject> Bodies { get; set; } =
@@ -91,7 +92,7 @@ namespace SolarSystemSimulation
             var but = (Button) sender;
             but.IsEnabled = false;
 
-            Task.Run(() => _system.StartSimulation(240, 32));
+            Task.Run(() => _system.StartSimulation(240, TimeScale));
             Task.Delay(TimeSpan.FromSeconds(SimulationTime)).ContinueWith(_ =>
             {
                 _system.IsRunning = false;
